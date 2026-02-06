@@ -244,28 +244,41 @@ st.write("Enter customer information to estimate churn probability and see easy-
 xgb_model, rf_model, ensemble_cfg, X_bg_sample, expl_xgb, expl_rf = load_artifacts()
 threshold = float(ensemble_cfg.get("threshold", 0.5))
 
-
 st.divider()
 st.subheader("Customer Details")
 
-SeniorCitizen = st.selectbox("Senior Citizen?", ["No", "Yes"], index=0)
-Partner = st.selectbox("Has Partner?", ["No", "Yes"], index=0)
-Dependents = st.selectbox("Has Dependents?", ["No", "Yes"], index=0)
+# Row 1
+c1, c2, c3 = st.columns(3)
+with c1:
+    SeniorCitizen = st.selectbox("Senior Citizen?", ["No", "Yes"], index=0)
+with c2:
+    Partner = st.selectbox("Has Partner?", ["No", "Yes"], index=0)
+with c3:
+    Dependents = st.selectbox("Has Dependents?", ["No", "Yes"], index=0)
 
-tenure = st.slider("Tenure (months)", min_value=0, max_value=72, value=12)
+# Row 2
+c1, c2, c3 = st.columns(3)
+with c1:
+    InternetService = st.selectbox("Internet Service", list(INTERNET_MAP.keys()), index=2)
+with c2:
+    OnlineSecurity = st.selectbox("Online Security", ["No", "Yes"], index=0)
+with c3:
+    TechSupport = st.selectbox("Tech Support", ["No", "Yes"], index=0)
 
-InternetService = st.selectbox("Internet Service", list(INTERNET_MAP.keys()), index=2)
-OnlineSecurity = st.selectbox("Online Security", ["No", "Yes"], index=0)
-TechSupport = st.selectbox("Tech Support", ["No", "Yes"], index=0)
+# Row 3
+c1, c2, c3 = st.columns(3)
+with c1:
+    PaperlessBilling = st.selectbox("Paperless Billing", ["No", "Yes"], index=1)
+with c2:
+    Contract_Risk = st.selectbox("Contract Type", list(CONTRACT_MAP.keys()), index=2)
+with c3:
+    payment_method = st.selectbox("Payment Method", PAYMENT_OPTIONS, index=2)
 
-PaperlessBilling = st.selectbox("Paperless Billing", ["No", "Yes"], index=1)
+tenure = st.slider("Tenure (months)", 0, 72, 12)
 
 MonthlyCharges = st.number_input(
-    "Monthly Charges ($)", min_value=0.0, max_value=500.0, value=70.0, step=1.0
+    "Monthly Charges ($)", 0.0, 500.0, 70.0, step=1.0
 )
-
-Contract_Risk = st.selectbox("Contract Type", list(CONTRACT_MAP.keys()), index=2)
-payment_method = st.selectbox("Payment Method", PAYMENT_OPTIONS, index=2)
 
 predict_btn = st.button("🔮 Predict Churn", use_container_width=True)
 
