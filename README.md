@@ -95,7 +95,7 @@ Open the demo link above and test both churn and non-churn cases.
    ```
 3. Run the app:
    ```bash
-   streamlit run utils/app.py
+   streamlit run app.py
    ```
 
 ---
